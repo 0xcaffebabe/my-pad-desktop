@@ -7,10 +7,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -65,9 +69,38 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         createUpdateCurrentTimeThread();
         createWeatherUpdateThread();
+
+        createChargeListener();
         test();
     }
 
+    private void createChargeListener() {
+        new Thread(() -> {
+            while(true) {
+                IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+                Intent batteryStatus = MainActivity.this.registerReceiver(null, ifilter);
+                int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                        status == BatteryManager.BATTERY_STATUS_FULL;
+                Log.i("ISMY", "charging == " + isCharging);
+                // 在充电状态 则屏幕常量 反之关闭
+                if (isCharging) {
+                    indoorHumidityTextView.post(() -> {
+                        MainActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    });
+                }else {
+                    indoorHumidityTextView.post(() -> {
+                        MainActivity.this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    });
+                }
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 
 
     private void initViewRef(){
