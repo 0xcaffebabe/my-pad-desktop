@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,8 +28,10 @@ import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
+import wang.ismy.desktop.dto.ForecastItem;
 import wang.ismy.desktop.dto.WeatherDTO;
 import wang.ismy.desktop.service.WeatherService;
 import wang.ismy.desktop.util.NumberUtils;
@@ -61,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         initViewRef();
         getSupportActionBar().hide();
         createUpdateCurrentTimeThread();
-        createMonthFutureWeather();
-        createDayFutureWeather();
         createWeatherUpdateThread();
         test();
     }
@@ -142,28 +143,30 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void createMonthFutureWeather(){
+    private void createMonthFutureWeather(List<ForecastItem> dataList){
         LinearLayout list = findViewById(R.id.monthWeatherList);
         list.removeAllViews();
-        for (int i = 0; i < 15; i++) {
+        for (ForecastItem data : dataList) {
             LinearLayout item = new LinearLayout(MainActivity.this);
+            item.setPadding(50,0,50,0);
             item.setOrientation(LinearLayout.VERTICAL);
-            item.addView(createFutureText("10-31"));
-            item.addView(createFutureText("多云"));
-            item.addView(createFutureText("25℃~35℃"));
+            item.addView(createFutureText(data.getDesc()));
+            item.addView(createFutureText(data.getWeather()));
+            item.addView(createFutureText(data.getMinTemperature() + "℃~" + data.getMaxTemperature() + "℃"));
             list.addView(item);
         }
     }
 
-    private void createDayFutureWeather(){
+    private void createDayFutureWeather(List<ForecastItem> dataList){
         LinearLayout list = findViewById(R.id.dayWeatherList);
         list.removeAllViews();
-        for (int i = 0; i < 15; i++) {
+        for (ForecastItem data : dataList) {
             LinearLayout item = new LinearLayout(MainActivity.this);
+            item.setPadding(50,0,50,0);
             item.setOrientation(LinearLayout.VERTICAL);
-            item.addView(createFutureText("19:00"));
-            item.addView(createFutureText("多云"));
-            item.addView(createFutureText("35℃"));
+            item.addView(createFutureText(data.getDesc()));
+            item.addView(createFutureText(data.getWeather()));
+            item.addView(createFutureText(data.getMinTemperature() + "℃"));
             list.addView(item);
         }
     }
@@ -181,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
                     rainFallIn2HourProbabilityTextView.setText(weatherDTO.getRainFallIn2HourProbability());
                     rainFallPrecipitationTextView.setText(weatherDTO.getRainFallPrecipitation());
                     lastUpdateTimeTextView.setText("最后更新于:" + weatherDTO.getLastUpdateTime());
+                    createMonthFutureWeather(weatherDTO.getForecastDaily());
+                    createDayFutureWeather(weatherDTO.getForecastHourly());
                 });
                 try {
                     Thread.sleep(60 * 1000);
@@ -195,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = new TextView(MainActivity.this);textView.setText(text);
         textView.setTextColor(getResources().getColor(R.color.white));
         textView.setTextSize(25);
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         return textView;
     }
 }

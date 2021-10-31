@@ -8,10 +8,15 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.hutool.http.HttpUtil;
+import wang.ismy.desktop.dto.ForecastItem;
 import wang.ismy.desktop.dto.WeatherDTO;
 
 /**
@@ -39,8 +44,55 @@ public class WeatherService {
         weatherDTO.setLastUpdateTime((String) JSONPath.read(json, "$current.pubTime"));
         weatherDTO.setRainFallIn2HourProbability((String) JSONPath.read(json, "$minutely.probability.maxProbability"));
         weatherDTO.setRainFallPrecipitation((String) JSONPath.read(json, "$minutely.precipitation.description"));
-
+        weatherDTO.setForecastDaily(buildForecastDaily(json));
+        weatherDTO.setForecastHourly(buildForecastHourly(json));
         return weatherDTO;
+    }
+
+    private List<ForecastItem> buildForecastDaily(String json){
+        String pubTime = (String) JSONPath.read(json, "$forecastDaily.pubTime");
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("MM-dd");
+        LocalDateTime pubDatetime = LocalDateTime.parse(pubTime, formatter);
+
+        JSONArray temperatureArray = (JSONArray) JSONPath.read(json, "$forecastDaily.temperature.value");
+        JSONArray weatherArray = (JSONArray) JSONPath.read(json, "$forecastDaily.weather.value");
+
+        List<ForecastItem> result = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            ForecastItem item = new ForecastItem();
+            item.setDesc(pubDatetime.plusDays(i+1).format(dayFormatter));
+            JSONObject weatherJson = weatherArray.getJSONObject(i);
+            JSONObject temperatureJson = temperatureArray.getJSONObject(i);
+            item.setWeather(weatherMap.get(weatherJson.getString("from")) + "-" + weatherMap.get(weatherJson.getString("to")));
+            item.setMaxTemperature(temperatureJson.getString("from"));
+            item.setMinTemperature(temperatureJson.getString("to"));
+            result.add(item);
+        }
+        return result;
+    }
+
+    private List<ForecastItem> buildForecastHourly(String json){
+        String pubTime = (String) JSONPath.read(json, "$forecastHourly.temperature.pubTime");
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime pubDatetime = LocalDateTime.parse(pubTime, formatter);
+
+        JSONArray temperatureArray = (JSONArray) JSONPath.read(json, "$forecastHourly.temperature.value");
+        JSONArray weatherArray = (JSONArray) JSONPath.read(json, "$forecastHourly.weather.value");
+
+        List<ForecastItem> result = new ArrayList<>();
+        for (int i = 0; i < temperatureArray.size(); i++) {
+            ForecastItem item = new ForecastItem();
+            item.setDesc(pubDatetime.plusHours(i).format(dayFormatter));
+            String weatherJson = weatherArray.getString(i);
+            String temperatureJson = temperatureArray.getString(i);
+            item.setWeather(weatherMap.get(weatherJson));
+            item.setMaxTemperature(temperatureJson);
+            item.setMinTemperature(temperatureJson);
+            result.add(item);
+        }
+        return result;
     }
 
     private void buildWeatherMap(){

@@ -1,5 +1,8 @@
 package wang.ismy.desktop.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WeatherDTO {
     private String currentWeather;
     private String outdoorTemperature;
@@ -15,6 +18,25 @@ public class WeatherDTO {
     private String rainFallPrecipitation;
 
     private String lastUpdateTime;
+
+    private List<ForecastItem> forecastDaily = new ArrayList<>();
+    private List<ForecastItem> forecastHourly = new ArrayList<>();
+
+    public List<ForecastItem> getForecastDaily() {
+        return forecastDaily;
+    }
+
+    public void setForecastDaily(List<ForecastItem> forecastDaily) {
+        this.forecastDaily = forecastDaily;
+    }
+
+    public List<ForecastItem> getForecastHourly() {
+        return forecastHourly;
+    }
+
+    public void setForecastHourly(List<ForecastItem> forecastHourly) {
+        this.forecastHourly = forecastHourly;
+    }
 
     public String getCurrentWeather() {
         return currentWeather;
