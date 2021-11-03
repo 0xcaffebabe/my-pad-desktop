@@ -28,12 +28,6 @@ import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
 import com.inuker.bluetooth.library.utils.BluetoothLog;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -59,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView currentWeatherTextView, outdoorTemperatureTextView, outdoorHumidityTextView, feelLikeTemperatureTextView, rainFallIn2HourProbabilityTextView, rainFallPrecipitationTextView, lastUpdateTimeTextView;
 
-    private TextView pcCPUMonitorTextView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,13 +71,12 @@ public class MainActivity extends AppCompatActivity {
         createWeatherUpdateThread();
 
         createChargeListener();
-        createPCMonitorThread();
         test();
     }
 
     private void createChargeListener() {
         new Thread(() -> {
-            while (true) {
+            while(true) {
                 IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
                 Intent batteryStatus = MainActivity.this.registerReceiver(null, ifilter);
                 int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
@@ -97,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     indoorHumidityTextView.post(() -> {
                         MainActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     });
-                } else {
+                }else {
                     indoorHumidityTextView.post(() -> {
                         MainActivity.this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     });
@@ -112,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void initViewRef() {
+    private void initViewRef(){
         indoorTemperatureTextView = findViewById(R.id.indoorTemperature);
         indoorHumidityTextView = findViewById(R.id.indoorHumidity);
         currentDatetime = findViewById(R.id.currentDatetime);
@@ -123,33 +114,30 @@ public class MainActivity extends AppCompatActivity {
         rainFallIn2HourProbabilityTextView = findViewById(R.id.rainFallIn2HourProbability);
         rainFallPrecipitationTextView = findViewById(R.id.rainFallPrecipitation);
         lastUpdateTimeTextView = findViewById(R.id.lastUpdateTime);
-
-        pcCPUMonitorTextView = findViewById(R.id.pcCPUMonitor);
     }
 
-    private void test() {
+    private void test(){
         BluetoothClient mClient = new BluetoothClient(MainActivity.this);
         connectMiJiaSensor(mClient);
     }
 
-    private void connectMiJiaSensor(BluetoothClient mClient) {
+    private void connectMiJiaSensor(BluetoothClient mClient){
         String mac = "A4:C1:38:14:3B:50";
         String serviceUUID = "ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6";
         String characterUUID = "ebe0ccc1-7a0a-4b0c-8a1a-6ff2997da3a6";
-        mClient.connect(mac, new BleConnectResponse() {
+        mClient.connect(mac,new BleConnectResponse() {
             @Override
             public void onResponse(int code, BleGattProfile profile) {
                 Log.i("ISMY", "connect status: " + code);
-                if (code == REQUEST_SUCCESS) {
-                    ;
+                if (code == REQUEST_SUCCESS) {;
                     mClient.notify(mac, UUID.fromString(serviceUUID), UUID.fromString(characterUUID), new BleNotifyResponse() {
                         @Override
                         public void onNotify(UUID service, UUID character, byte[] value) {
-                            int tmp = NumberUtils.byteArrayToInt(new byte[]{value[1], value[0]});
+                            int tmp = NumberUtils.byteArrayToInt(new byte[]{value[1],value[0]});
                             int humdity = value[2];
                             Log.i("ISMY", "tmp:" + tmp + ", hum:" + humdity);
                             // 更新室内温度
-                            indoorTemperatureTextView.setText("室内:" + (tmp / 100d) + "℃");
+                            indoorTemperatureTextView.setText("室内:" + (tmp/100d) + "℃");
                             // 更新室内湿度
                             indoorHumidityTextView.setText("室内:" + humdity + "%");
                         }
@@ -161,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-                } else {
+                }else {
                     Log.i("ISMY", "reconnect to mijia sensor");
                     connectMiJiaSensor(mClient);
                 }
@@ -171,10 +159,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void createUpdateCurrentTimeThread() {
+    private void createUpdateCurrentTimeThread(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         new Thread(() -> {
-            while (true) {
+            while(true) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -188,12 +176,12 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void createMonthFutureWeather(List<ForecastItem> dataList) {
+    private void createMonthFutureWeather(List<ForecastItem> dataList){
         LinearLayout list = findViewById(R.id.monthWeatherList);
         list.removeAllViews();
         for (ForecastItem data : dataList) {
             LinearLayout item = new LinearLayout(MainActivity.this);
-            item.setPadding(50, 0, 50, 0);
+            item.setPadding(50,0,50,0);
             item.setOrientation(LinearLayout.VERTICAL);
             item.addView(createFutureText(data.getDesc()));
             item.addView(createFutureText(data.getWeather()));
@@ -202,12 +190,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void createDayFutureWeather(List<ForecastItem> dataList) {
+    private void createDayFutureWeather(List<ForecastItem> dataList){
         LinearLayout list = findViewById(R.id.dayWeatherList);
         list.removeAllViews();
         for (ForecastItem data : dataList) {
             LinearLayout item = new LinearLayout(MainActivity.this);
-            item.setPadding(50, 0, 50, 0);
+            item.setPadding(50,0,50,0);
             item.setOrientation(LinearLayout.VERTICAL);
             item.addView(createFutureText(data.getDesc()));
             item.addView(createFutureText(data.getWeather()));
@@ -216,10 +204,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void createWeatherUpdateThread() {
-        new Thread(() -> {
+    private void createWeatherUpdateThread(){
+        new Thread(() ->{
             WeatherService weatherService = new WeatherService();
-            while (true) {
+            while(true) {
                 WeatherDTO weatherDTO = weatherService.get();
                 currentWeatherTextView.post(() -> {
                     currentWeatherTextView.setText(weatherDTO.getCurrentWeather());
@@ -241,47 +229,8 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void createPCMonitorThread() {
-        new Thread(() -> {
-            URLConnection urlConnection = null;
-            BufferedReader br = null;
-            try {
-                urlConnection = new URL("http://192.168.0.100:8888/sse").openConnection();
-                urlConnection.connect();
-                br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (urlConnection == null || br == null) {
-                Log.i("ISMY", "创建连接失败 重连");
-                createPCMonitorThread();
-                return;
-            }
-            while (true) {
-                try {
-                    String line = br.readLine();
-                    Log.i("ISMY", "接收到PC监控 " + line);
-                    if (line != null && line.startsWith("data:") && !line.contains("ReLoad")) {
-                        String[] arr = line.split("\\{\\|\\}");
-                        String cpuUsage = arr[1].split("\\|")[1].split(" ")[1];
-                        String cpuTemp = arr[2].split("\\|")[1].split(" ")[1];
-                        Log.i("ISMY", "cpu :" + cpuUsage + "," + cpuTemp);
-                        pcCPUMonitorTextView.post(() -> {
-                            pcCPUMonitorTextView.setText("CPU: " + cpuUsage + "," + cpuTemp);
-                        });
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    createPCMonitorThread();
-                    return;
-                }
-            }
-        }).start();
-    }
-
     private TextView createFutureText(String text) {
-        TextView textView = new TextView(MainActivity.this);
-        textView.setText(text);
+        TextView textView = new TextView(MainActivity.this);textView.setText(text);
         textView.setTextColor(getResources().getColor(R.color.white));
         textView.setTextSize(25);
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

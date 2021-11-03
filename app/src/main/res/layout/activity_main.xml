@@ -85,6 +85,12 @@
                     android:orientation="horizontal"
                     android:layout_weight="1"
                     >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="#fff"
+                        android:textSize="50sp"
+                        android:text="温度"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,6 +130,12 @@
                     android:orientation="horizontal"
                     android:layout_weight="1"
                     >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#fff"
+                        android:textSize="50sp"
+                        android:text="湿度"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -145,38 +157,6 @@
                             android:layout_weight="1"
                             android:textAlignment="center"
                             android:text="室内: - %"
-                            android:textSize="30sp"
-                            android:textColor="#fff"/>
-
-                    </LinearLayout>
-
-            </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    >
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:id="@+id/pcCPUMonitor"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textAlignment="center"
-                            android:text="CPU:-%,-73℃"
-                            android:textSize="30sp"
-                            android:textColor="#fff"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textAlignment="center"
-                            android:text="显卡: - %, - ℃"
                             android:textSize="30sp"
                             android:textColor="#fff"/>
 
