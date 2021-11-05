@@ -59,7 +59,7 @@ public class WeatherService {
         JSONArray weatherArray = (JSONArray) JSONPath.read(json, "$forecastDaily.weather.value");
 
         List<ForecastItem> result = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < temperatureArray.size(); i++) {
             ForecastItem item = new ForecastItem();
             item.setDesc(pubDatetime.plusDays(i+1).format(dayFormatter));
             JSONObject weatherJson = weatherArray.getJSONObject(i);
