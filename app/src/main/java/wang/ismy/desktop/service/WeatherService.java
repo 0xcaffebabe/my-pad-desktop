@@ -61,7 +61,7 @@ public class WeatherService {
         List<ForecastItem> result = new ArrayList<>();
         for (int i = 0; i < temperatureArray.size(); i++) {
             ForecastItem item = new ForecastItem();
-            item.setDesc(pubDatetime.plusDays(i+1).format(dayFormatter));
+            item.setDesc(pubDatetime.plusDays(i).format(dayFormatter));
             JSONObject weatherJson = weatherArray.getJSONObject(i);
             JSONObject temperatureJson = temperatureArray.getJSONObject(i);
             item.setWeather(weatherMap.get(weatherJson.getString("from")) + "-" + weatherMap.get(weatherJson.getString("to")));
