@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         createWeatherUpdateThread();
 
         createChargeListener();
-        test();
+//        test();
     }
 
     private void createChargeListener() {
@@ -230,7 +230,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private TextView createFutureText(String text) {
-        TextView textView = new TextView(MainActivity.this);textView.setText(text);
+        TextView textView = new TextView(MainActivity.this);
+        textView.setText(text == null ? "null": text);
         textView.setTextColor(getResources().getColor(R.color.white));
         textView.setTextSize(25);
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
