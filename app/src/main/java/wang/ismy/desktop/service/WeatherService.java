@@ -44,6 +44,8 @@ public class WeatherService {
         weatherDTO.setLastUpdateTime((String) JSONPath.read(json, "$current.pubTime"));
         weatherDTO.setRainFallIn2HourProbability((String) JSONPath.read(json, "$minutely.probability.maxProbability"));
         weatherDTO.setRainFallPrecipitation((String) JSONPath.read(json, "$minutely.precipitation.description"));
+        weatherDTO.setCurrentWindDirection((String) JSONPath.read(json, "$current.wind.direction.value"));
+        weatherDTO.setCurrentWindSpeed((String) JSONPath.read(json, "$current.wind.speed.value"));
         weatherDTO.setForecastDaily(buildForecastDaily(json));
         weatherDTO.setForecastHourly(buildForecastHourly(json));
         return weatherDTO;

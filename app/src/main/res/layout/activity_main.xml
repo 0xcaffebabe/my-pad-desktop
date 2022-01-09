@@ -41,14 +41,29 @@
                         android:textColor="#fff"
                         android:textSize="50sp"
                         android:text="现天"/>
-                    <TextView
-                        android:id="@+id/currentWeather"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="-"
-                        android:textSize="50sp"
-                        android:textColor="#fff"/>
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+<!--                        当前天气状况-->
+                        <TextView
+                            android:id="@+id/currentWeather"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="-"
+                            android:textSize="25sp"
+                            android:textColor="#fff"/>
+<!--                        当前风力-->
+                        <TextView
+                            android:id="@+id/currentWindState"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="-"
+                            android:textSize="25sp"
+                            android:textColor="#fff"/>
+                    </LinearLayout>
                 </LinearLayout>
 <!--                2小时降水概率-->
                 <LinearLayout

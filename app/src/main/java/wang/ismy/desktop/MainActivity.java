@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
     // 室内湿度
     private TextView indoorHumidityTextView;
 
-    private TextView currentWeatherTextView, outdoorTemperatureTextView, outdoorHumidityTextView, feelLikeTemperatureTextView, rainFallIn2HourProbabilityTextView, rainFallPrecipitationTextView, lastUpdateTimeTextView;
+    private TextView currentWeatherTextView, outdoorTemperatureTextView, outdoorHumidityTextView,
+            feelLikeTemperatureTextView, rainFallIn2HourProbabilityTextView, rainFallPrecipitationTextView,
+            lastUpdateTimeTextView, currentWindStateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         rainFallIn2HourProbabilityTextView = findViewById(R.id.rainFallIn2HourProbability);
         rainFallPrecipitationTextView = findViewById(R.id.rainFallPrecipitation);
         lastUpdateTimeTextView = findViewById(R.id.lastUpdateTime);
+        currentWindStateTextView = findViewById(R.id.currentWindState);
     }
 
     private void test(){
@@ -211,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 WeatherDTO weatherDTO = weatherService.get();
                 currentWeatherTextView.post(() -> {
                     currentWeatherTextView.setText(weatherDTO.getCurrentWeather());
+                    currentWindStateTextView.setText(weatherDTO.getCurrentWindDirection()+"° " + weatherDTO.getCurrentWindSpeed()+"km/h");
                     outdoorTemperatureTextView.setText("室外:" + weatherDTO.getOutdoorTemperature() + "℃");
                     outdoorHumidityTextView.setText("室外:" + weatherDTO.getOutdoorHumidity() + "%");
                     feelLikeTemperatureTextView.setText("体感:" + weatherDTO.getFeelLikeTemperature() + "℃");

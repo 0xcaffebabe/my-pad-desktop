@@ -5,6 +5,14 @@ import java.util.List;
 
 public class WeatherDTO {
     private String currentWeather;
+    /**
+     * 风向
+     */
+    private String currentWindDirection;
+    /**
+     * 风速
+     */
+    private String currentWindSpeed;
     private String outdoorTemperature;
     private String feelLikeTemperature;
     private String outdoorHumidity;
@@ -94,16 +102,36 @@ public class WeatherDTO {
         this.lastUpdateTime = lastUpdateTime;
     }
 
+    public String getCurrentWindDirection() {
+        return currentWindDirection;
+    }
+
+    public void setCurrentWindDirection(String currentWindDirection) {
+        this.currentWindDirection = currentWindDirection;
+    }
+
+    public String getCurrentWindSpeed() {
+        return currentWindSpeed;
+    }
+
+    public void setCurrentWindSpeed(String currentWindSpeed) {
+        this.currentWindSpeed = currentWindSpeed;
+    }
+
     @Override
     public String toString() {
         return "WeatherDTO{" +
                 "currentWeather='" + currentWeather + '\'' +
+                ", currentWindDirection='" + currentWindDirection + '\'' +
+                ", currentWindSpeed='" + currentWindSpeed + '\'' +
                 ", outdoorTemperature='" + outdoorTemperature + '\'' +
                 ", feelLikeTemperature='" + feelLikeTemperature + '\'' +
                 ", outdoorHumidity='" + outdoorHumidity + '\'' +
                 ", rainFallIn2HourProbability='" + rainFallIn2HourProbability + '\'' +
                 ", rainFallPrecipitation='" + rainFallPrecipitation + '\'' +
                 ", lastUpdateTime='" + lastUpdateTime + '\'' +
+                ", forecastDaily=" + forecastDaily +
+                ", forecastHourly=" + forecastHourly +
                 '}';
     }
 }
