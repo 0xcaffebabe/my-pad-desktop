@@ -10,7 +10,7 @@ public class WeatherDTO {
      */
     private String currentWindDirection;
     /**
-     * 风速
+     * 风速 m/s
      */
     private String currentWindSpeed;
     private String outdoorTemperature;

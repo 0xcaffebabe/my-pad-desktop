@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 WeatherDTO weatherDTO = weatherService.get();
                 currentWeatherTextView.post(() -> {
                     currentWeatherTextView.setText(weatherDTO.getCurrentWeather());
-                    currentWindStateTextView.setText(weatherDTO.getCurrentWindDirection()+"° " + weatherDTO.getCurrentWindSpeed()+"km/h");
+                    currentWindStateTextView.setText(weatherDTO.getCurrentWindDirection()+" " + weatherDTO.getCurrentWindSpeed()+"m/s");
                     outdoorTemperatureTextView.setText("室外:" + weatherDTO.getOutdoorTemperature() + "℃");
                     outdoorHumidityTextView.setText("室外:" + weatherDTO.getOutdoorHumidity() + "%");
                     feelLikeTemperatureTextView.setText("体感:" + weatherDTO.getFeelLikeTemperature() + "℃");

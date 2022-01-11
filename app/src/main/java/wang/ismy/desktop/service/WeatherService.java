@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ import wang.ismy.desktop.dto.WeatherDTO;
 public class WeatherService {
 
     private Map<String, String> weatherMap = new HashMap<>();
+
+    static final String[] directArr = new String[] { "北", "东北偏北", "东北", "东北偏东", "东", "东南偏东", "东南", "东南偏南", "南",
+            "西南偏南", "西南", "西南偏西", "西", "西北偏西", "西北", "西北偏北" };
 
     {buildWeatherMap();}
 
@@ -44,12 +48,61 @@ public class WeatherService {
         weatherDTO.setLastUpdateTime((String) JSONPath.read(json, "$current.pubTime"));
         weatherDTO.setRainFallIn2HourProbability((String) JSONPath.read(json, "$minutely.probability.maxProbability"));
         weatherDTO.setRainFallPrecipitation((String) JSONPath.read(json, "$minutely.precipitation.description"));
-        weatherDTO.setCurrentWindDirection((String) JSONPath.read(json, "$current.wind.direction.value"));
-        weatherDTO.setCurrentWindSpeed((String) JSONPath.read(json, "$current.wind.speed.value"));
+        weatherDTO.setCurrentWindDirection(readableDirection((String) JSONPath.read(json, "$current.wind.direction.value")));
+        weatherDTO.setCurrentWindSpeed(calcWindSpeed((String) JSONPath.read(json, "$current.wind.speed.value")));
         weatherDTO.setForecastDaily(buildForecastDaily(json));
         weatherDTO.setForecastHourly(buildForecastHourly(json));
         return weatherDTO;
     }
+
+    private String calcWindSpeed(String value) {
+        Double speed = Double.parseDouble(value) * 1000 / 3600;
+        return new DecimalFormat("#.00").format(speed);
+    }
+
+    private static String readableDirection(String value) {
+        float degrees = Float.parseFloat(value);
+        int index = 0;
+        if (348.75 <= degrees && degrees <= 360) {
+                index = 0;
+        } else if (0 <= degrees && degrees <= 11.25) {
+                index = 0;
+        } else if (11.25 < degrees && degrees <= 33.75) {
+                index = 1;
+        } else if (33.75 < degrees && degrees <= 56.25) {
+                index = 2;
+        } else if (56.25 < degrees && degrees <= 78.75) {
+                index = 3;
+        } else if (78.75 < degrees && degrees <= 101.25) {
+                index = 4;
+        } else if (101.25 < degrees && degrees <= 123.75) {
+                index = 5;
+        } else if (123.75 < degrees && degrees <= 146.25) {
+                index = 6;
+        } else if (146.25 < degrees && degrees <= 168.75) {
+                index = 7;
+        } else if (168.75 < degrees && degrees <= 191.25) {
+                index = 8;
+        } else if (191.25 < degrees && degrees <= 213.75) {
+                index = 9;
+        } else if (213.75 < degrees && degrees <= 236.25) {
+                index = 10;
+        } else if (236.25 < degrees && degrees <= 258.75) {
+                index = 11;
+        } else if (258.75 < degrees && degrees <= 281.25) {
+                index = 12;
+        } else if (281.25 < degrees && degrees <= 303.75) {
+                index = 13;
+        } else if (303.75 < degrees && degrees <= 326.25) {
+                index = 14;
+        } else if (326.25 < degrees && degrees < 348.75) {
+                index = 15;
+        } else {
+            return "错误";
+        }
+        return directArr[index];
+    }
+
 
     private List<ForecastItem> buildForecastDaily(String json){
         String pubTime = (String) JSONPath.read(json, "$forecastDaily.pubTime");
