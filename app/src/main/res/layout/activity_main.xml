@@ -11,130 +11,136 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/currentDatetime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="yyyy-MM-dd HH:mm:ss"
-                android:textColor="#fff"
                 android:textAlignment="center"
+                android:textColor="#fff"
                 android:textSize="44sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-<!--                当前天气-->
+                android:orientation="horizontal">
+                <!--                当前天气-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
+                    android:layout_weight="1">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="现天"
                         android:textColor="#fff"
-                        android:textSize="50sp"
-                        android:text="现天"/>
+                        android:textSize="50sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
-<!--                        当前天气状况-->
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!--                        当前天气状况-->
                         <TextView
                             android:id="@+id/currentWeather"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
                             android:text="-"
-                            android:textSize="25sp"
-                            android:textColor="#fff"/>
-<!--                        当前风力-->
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="25sp" />
+                        <!--                        当前风力-->
                         <TextView
                             android:id="@+id/currentWindState"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
                             android:text="-"
-                            android:textSize="25sp"
-                            android:textColor="#fff"/>
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="25sp" />
                     </LinearLayout>
                 </LinearLayout>
-<!--                2小时降水概率-->
+                <!--                2小时降水概率-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="降概"
                         android:textColor="#fff"
-                        android:textSize="50sp"
-                        android:text="降概"/>
+                        android:textSize="50sp" />
+
                     <TextView
                         android:id="@+id/rainFallIn2HourProbability"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
                         android:text="-%"
-                        android:textSize="50sp"
-                        android:textColor="#fff"/>
+                        android:textAlignment="center"
+                        android:textColor="#fff"
+                        android:textSize="50sp" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
                 <!--            温度-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:text="温度"
                         android:textColor="#fff"
-                        android:textSize="50sp"
-                        android:text="温度"/>
+                        android:textSize="50sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/outdoorTemperature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
                             android:text="气温:-℃"
-                            android:textSize="30sp"
-                            android:textColor="#fff"/>
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="30sp" />
+
                         <TextView
                             android:id="@+id/feelLikeTemperature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
                             android:text="体感:-℃"
-                            android:textSize="30sp"
-                            android:textColor="#fff"/>
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="30sp" />
+
                         <TextView
                             android:id="@+id/indoorTemperature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
                             android:text="室内:-℃"
-                            android:textSize="30sp"
-                            android:textColor="#fff"/>
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="30sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -142,38 +148,40 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="湿度"
                         android:textColor="#fff"
-                        android:textSize="50sp"
-                        android:text="湿度"/>
+                        android:textSize="50sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        >
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/outdoorHumidity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textAlignment="center"
                             android:text="室外:-%"
-                            android:textSize="30sp"
-                            android:textColor="#fff"/>
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="30sp" />
+
                         <TextView
                             android:id="@+id/indoorHumidity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textAlignment="center"
                             android:text="室内: - %"
-                            android:textSize="30sp"
-                            android:textColor="#fff"/>
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+                            android:textSize="30sp" />
 
                     </LinearLayout>
 
@@ -186,50 +194,52 @@
                 android:layout_height="wrap_content"
                 android:text="-"
                 android:textAlignment="center"
-                android:textSize="25sp"
-                android:textColor="#fff"/>
+                android:textColor="#fff"
+                android:textSize="25sp" />
+
             <TextView
                 android:id="@+id/lastUpdateTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="最后更新于:yyyy-MM-dd HH:mm:ss"
                 android:textAlignment="center"
-                android:textSize="25sp"
-                android:textColor="#fff"/>
+                android:textColor="#fff"
+                android:textSize="25sp" />
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/dayWeatherList"
-                    >
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="25sp"
                             android:text="19:00"
                             android:textColor="#fff"
-                            />
+                            android:textSize="25sp" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="25sp"
+                            android:text="多云"
                             android:textColor="#fff"
-                            android:text="多云"/>
+                            android:textSize="25sp" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="25sp"
+                            android:text="24℃"
                             android:textColor="#fff"
-                            android:text="24℃"/>
+                            android:textSize="25sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -237,37 +247,38 @@
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/monthWeatherList"
-                    >
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="25sp"
                             android:text="10-31"
                             android:textColor="#fff"
-                            />
+                            android:textSize="25sp" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="25sp"
+                            android:text="多云"
                             android:textColor="#fff"
-                            android:text="多云"/>
+                            android:textSize="25sp" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="25sp"
+                            android:text="24℃"
                             android:textColor="#fff"
-                            android:text="24℃"/>
+                            android:textSize="25sp" />
                     </LinearLayout>
 
                 </LinearLayout>
