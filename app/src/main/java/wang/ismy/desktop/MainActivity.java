@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -37,6 +38,7 @@ import java.util.UUID;
 
 import wang.ismy.desktop.dto.ForecastItem;
 import wang.ismy.desktop.dto.WeatherDTO;
+import wang.ismy.desktop.service.HomeAssistantService;
 import wang.ismy.desktop.service.WeatherService;
 import wang.ismy.desktop.util.NumberUtils;
 
@@ -210,8 +212,10 @@ public class MainActivity extends AppCompatActivity {
     private void createWeatherUpdateThread(){
         new Thread(() ->{
             WeatherService weatherService = new WeatherService();
+            HomeAssistantService homeAssistantService = new HomeAssistantService();
             while(true) {
                 WeatherDTO weatherDTO = weatherService.get();
+                Pair<String, String> roomTemperatureAndHumidity = homeAssistantService.getRoomTemperatureAndHumidity();
                 currentWeatherTextView.post(() -> {
                     currentWeatherTextView.setText(weatherDTO.getCurrentWeather());
                     currentWindStateTextView.setText(weatherDTO.getCurrentWindDirection()+" " + weatherDTO.getCurrentWindSpeed()+"m/s");
@@ -221,6 +225,10 @@ public class MainActivity extends AppCompatActivity {
                     rainFallIn2HourProbabilityTextView.setText(weatherDTO.getRainFallIn2HourProbability());
                     rainFallPrecipitationTextView.setText(weatherDTO.getRainFallPrecipitation());
                     lastUpdateTimeTextView.setText("最后更新于:" + weatherDTO.getLastUpdateTime());
+
+                    indoorTemperatureTextView.setText("室内: " + roomTemperatureAndHumidity.first + "℃");
+                    indoorHumidityTextView.setText("室内: " + roomTemperatureAndHumidity.second + "%");
+
                     createMonthFutureWeather(weatherDTO.getForecastDaily());
                     createDayFutureWeather(weatherDTO.getForecastHourly());
                 });
